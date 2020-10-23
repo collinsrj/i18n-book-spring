@@ -1,0 +1,344 @@
+openapi: 3.0.1
+info:
+  title: TODO
+  description: TODO
+  contact:
+    email: apiteam@swagger.io
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+  version: 1.0.0
+servers:
+  - url: 'http://localhost'
+    variables: {}
+    description: TODO
+tags:
+  - name: jobs
+    description: TODO
+  - name: contacts
+    description: TODO
+paths:
+  /jobs:
+    summary: TODO
+    description: TODO
+    post:
+      tags:
+        - jobs
+      summary: TODO
+      description: TODO
+      operationId: createJob
+      requestBody:
+        description: TODO
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Job'
+      responses:
+        '201':
+          description: Created
+        default:
+          description: Default error sample response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    get:
+      tags:
+        - jobs
+      summary: TODO
+      description: TODO
+      operationId: findJobs
+      parameters:
+        - in: query
+          name: offset
+          schema:
+            type: integer
+            format: int32
+            default: 0
+            minimum: 0
+          description: The number of items to skip before starting to collect the result set
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            format: int32
+            default: 10
+            minimum: 0
+            maximum: 100
+          description: The numbers of items to return
+        - in: query
+          name: sort
+          schema:
+            type: array
+            items:
+              type: string
+          style: pipeDelimited
+          explode: false
+      responses:
+        '200':
+          description: TODO
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Jobs'
+        '404':
+          description: TODO
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        default:
+          description: Default error sample response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /contacts:
+    summary: TODO
+    description: TODO
+    post:
+      tags:
+        - contacts
+      summary: TODO
+      description: TODO
+      operationId: createContact
+      requestBody:
+        description: TODO
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Person'
+      responses:
+        '201':
+          description: Created
+        default:
+          description: Default error sample response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    get:
+      tags:
+        - contacts
+      summary: TODO
+      description: TODO
+      operationId: findContacts
+      parameters:
+        - in: query
+          name: offset
+          schema:
+            type: integer
+            format: int32
+            default: 0
+            minimum: 0
+          description: The number of items to skip before starting to collect the result set
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            format: int32
+            default: 10
+            minimum: 0
+            maximum: 100
+          description: The numbers of items to return
+        - in: query
+          name: sort
+          schema:
+            type: array
+            items:
+              type: string
+          style: pipeDelimited
+          explode: false
+          description: A pipe delimited set of fields prefixed with a `+` for ascending and `-` for descending. E.g. `sort=+name|-age`
+      responses:
+        '200':
+          description: TODO
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Persons'
+        default:
+          description: Default error sample response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /contacts/{id}:
+    summary: TODO
+    description: TODO
+    get:
+      tags:
+        - contacts
+      summary: TODO
+      description: TODO
+      operationId: getContact
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: The ID of the contact
+      responses:
+        '200':
+          description: TODO
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Person'
+        default:
+          description: Default error sample response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    Job:
+      type: object
+      properties:
+        startDateTime:
+          type: string
+          format: date-time
+          description: TODO
+        timeRemaining:
+          type: string
+          minimum: 0
+          description: TODO
+        priceQuoted:
+          type: object
+          description: TODO
+          properties:
+            amount:
+              type: number
+              format: double
+              description: TODO
+            currency:
+              type: string
+              minLength: 3
+              maxLength: 3
+              description: ISO currency code
+              default: 'EUR'
+        customer:
+          type: string
+          format: uuid
+          description: TODO
+        type:
+          $ref: '#/components/schemas/JobType'
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        created:
+          type: string
+          format: date-time
+          description: TODO
+          readOnly: true
+      required:
+        - startDateTime
+        - customer
+        - priceQuoted
+        - timeRemaining
+    JobType:
+      type: string
+      enum:
+        - work
+        - family
+        - personal
+      description: >
+        * `work` - some work job * `family` - a family job * `personal` - a
+        personal job
+    Jobs:
+      type: object
+      properties:
+        limit:
+          type: integer
+          description: TODO
+        offset:
+          type: integer
+          description: TODO
+        count:
+          type: integer
+          description: TODO
+        total:
+          type: integer
+          format: int64
+          description: TODO
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Job'
+    Person:
+      type: object
+      properties:
+        givenName:
+          type: string
+        familyName:
+          type: string
+        phoneNumber:
+          type: string
+        email:
+          type: string
+          format: email
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        created:
+          type: string
+          format: date-time
+          readOnly: true
+          description: TODO
+      required:
+        - phoneNumber
+    Persons:
+      type: object
+      properties:
+        limit:
+          type: integer
+          readOnly: true
+          description: TODO
+        offset:
+          type: integer
+          readOnly: true
+          description: TODO
+        count:
+          type: integer
+          readOnly: true
+          description: TODO
+        total:
+          type: integer
+          readOnly: true
+          format: int64
+          description: TODO
+        items:
+          type: array
+          readOnly: true
+          items:
+            $ref: '#/components/schemas/Person'
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          readOnly: true
+          description: An error code unique to the jobs application
+        title:
+          type: string
+          readOnly: true
+          description: A brief, human-readable message about the error. Localised using Accept-Language.
+        detail:
+          type: string
+          readOnly: true
+          description: A human-readable explanation of the error. Localised using Accept-Language.
+        message:
+          type: string
+          readOnly: true
+          description: An API developer orientated description of the message
+      required:
+        - error
+        - title
+        - detail
+        - message
