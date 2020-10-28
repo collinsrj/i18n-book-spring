@@ -1,3 +1,6 @@
+
+[//]: # (Copyright 2020, Robert Collins and the i18n-book contributors.)
+
 # Native Apps
 With native apps such as those for Android and iOS, there is typically much better OS support for localisation.
  

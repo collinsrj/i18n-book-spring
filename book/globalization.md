@@ -1,3 +1,6 @@
+
+[//]: # (Copyright 2020, Robert Collins and the i18n-book contributors.)
+
 # Globalisation
 There are lots of anecdotal tales of failure to recognize the
 

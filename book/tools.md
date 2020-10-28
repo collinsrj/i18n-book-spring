@@ -1,3 +1,6 @@
+
+[//]: # (Copyright 2020, Robert Collins and the i18n-book contributors.)
+
 # Tools
 
 ## A Shared Format for Content

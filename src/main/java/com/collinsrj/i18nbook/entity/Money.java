@@ -13,13 +13,18 @@ import java.util.Currency;
 @Embeddable
 @NoArgsConstructor
 public class Money {
-    @Column
+    @Column(scale = 4, precision = 13)
     BigDecimal amount;
     @Column(length = 3)
     @Convert(converter = CurrencyConverter.class)
     Currency currency;
 
-    public Money(BigDecimal amout, String currency) {
+    /**
+     *
+     * @param amount the decimal amount
+     * @param currency the ISO currency code e.g. 'EUR'
+     */
+    public Money(BigDecimal amount, String currency) {
         this.currency = Currency.getInstance(currency);
     }
 }
